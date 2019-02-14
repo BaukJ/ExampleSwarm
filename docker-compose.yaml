@@ -1,0 +1,9 @@
+version: '3.0'
+
+services:
+  jenkins:
+    image: bauk/jenkins-full
+    build: images/jenkins-full
+
+  visualiser:
+    image: dockersamples/visualizer
