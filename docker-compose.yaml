@@ -4,6 +4,19 @@ services:
   jenkins:
     image: bauk/jenkins-full
     build: images/jenkins-full
+    environment:
+      - CASC_JENKINS_CONFIG=/jenkins.yaml
+    volumes:
+      - $PWD/jenkins.yaml:/jenkins.yaml
+    ports:
+      - 9000:8080
 
   visualiser:
     image: dockersamples/visualizer
+
+# secrets:
+#   admin.password:
+#     file: secrets/admin.password
+#   admin.user:
+#     file: secrets/admin.user
+

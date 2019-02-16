@@ -73,3 +73,6 @@ workflow-support
 ws-cleanup
 swarm
 htmlpublisher
+# Configuration as code
+configuration-as-code
+configuration-as-code-support

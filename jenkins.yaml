@@ -1,0 +1,27 @@
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: admin
+         password: admin
+  authorizationStrategy:
+    globalMatrix:
+      grantedPermissions:
+        - "Overall/Administer:authenticated"
+tool:
+  git:
+    installations:
+      - name: git
+        home: /usr/local/bin/git
+# credentials:
+#   system:
+#     domainCredentials:
+#       credentials:
+#         - certificate:
+#             scope: SYSTEM
+#             id: ssh_private_key
+#             keyStoreSource:
+#               fileOnMaster:
+#                 keyStoreFile: /docker/secret/id_rsa
+

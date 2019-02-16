@@ -16,8 +16,7 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 #RUN mkdir /var/jenkins_home/ssh-keys
 #COPY test_rsa /ssh-keys/jenkins
 
-COPY init.groovy.d/* /usr/share/jenkins/ref/init.groovy.d/
+#COPY init.groovy.d/* /usr/share/jenkins/ref/init.groovy.d/
 
 
-USER root
 
