@@ -9,19 +9,40 @@ jenkins:
     globalMatrix:
       grantedPermissions:
         - "Overall/Administer:authenticated"
+  nodes:
+    - permanent:
+        labelString: "linux docker git"
+        mode: NORMAL
+        name: "slave"
+        remoteFS: "/jenkins"
+        launcher:
+          SSHLauncher:
+            host: jenkins_slave
+            port: 22
+            credentialsId: slaveSSH
+            launchTimeoutSeconds: 60
+            maxNumRetries: 3
+            retryWaitTime: 30
+            sshHostKeyVerificationStrategy:
+              manuallyTrustedKeyVerificationStrategy:
+                requireInitialManualTrust: false
 tool:
   git:
     installations:
       - name: git
         home: /usr/local/bin/git
-# credentials:
-#   system:
-#     domainCredentials:
-#       credentials:
-#         - certificate:
-#             scope: SYSTEM
-#             id: ssh_private_key
-#             keyStoreSource:
-#               fileOnMaster:
-#                 keyStoreFile: /docker/secret/id_rsa
-
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - basicSSHUserPrivateKey:
+              scope: SYSTEM
+              id: slaveSSH
+              username: root
+              passphrase: ${SSH_SLAVE_KEY_PASSWORD}
+              description: "SSH Key for slaves"
+              privateKeySource:
+                directEntry:
+                  privateKey: ${SSH_SLAVE_KEY}
+                # FileOnMasterPrivateKeySource:
+                #   privateKeyFile: /run/secrets/id_rsa
