@@ -13,6 +13,10 @@ services:
         uid: '1000'
       - source: SSH_SLAVE_KEY_PASSWORD
         uid: '1000'
+      - source: JENKINS_ADMIN_USER
+        uid: '1000'
+      - source: JENKINS_ADMIN_PASSWORD
+        uid: '1000'
     ports:
       - 9000:8080
 
@@ -24,3 +28,9 @@ secrets:
     file: secrets/SSH_SLAVE_KEY
   SSH_SLAVE_KEY_PASSWORD:
     file: secrets/SSH_SLAVE_KEY_PASSWORD
+  SSH_SLAVE_PUBLIC_KEY:
+    file: secrets/SSH_SLAVE_PUBLIC_KEY
+  JENKINS_ADMIN_USER:
+    file: secrets/JENKINS_ADMIN_USER
+  JENKINS_ADMIN_PASSWORD:
+    file: secrets/JENKINS_ADMIN_PASSWORD
