@@ -1,6 +1,6 @@
 FROM centos/systemd
 
-RUN yum -y install openssh-server
+RUN yum -y install openssh-server java-1.8.0-openjdk
 RUN systemctl enable sshd
 
 
