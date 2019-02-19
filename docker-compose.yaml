@@ -19,6 +19,22 @@ services:
         uid: '1000'
     ports:
       - 9000:8080
+  jenkins_slave:
+    image: bauk/jenkins-slave
+    build: images/jenkins-slave
+    environment:
+      - SSH_USER=slave
+      - SSH_USER_EXTRA_DIRS=/jenkins
+    volumes:
+      #- /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - $PWD/tmp/slave_run:/run
+    ports:
+      - 3022:22
+    secrets:
+      - source: SSH_SLAVE_PUBLIC_KEY
+        target: SSH_PUBLIC_KEY
+
 
   visualiser:
     image: dockersamples/visualizer

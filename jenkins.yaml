@@ -38,7 +38,7 @@ credentials:
         - basicSSHUserPrivateKey:
               scope: SYSTEM
               id: slaveSSH
-              username: root
+              username: slave
               passphrase: ${SSH_SLAVE_KEY_PASSWORD}
               description: "SSH Key for slaves"
               privateKeySource:
