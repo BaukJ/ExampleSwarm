@@ -2,7 +2,7 @@
 Description=SSH user and folder setup service
 
 [Service]
-ExecStart=/entrypoint.sh
+ExecStart=/ssh_setup.sh
 
 [Install]
 WantedBy=multi-user.target

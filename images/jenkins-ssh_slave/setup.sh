@@ -5,6 +5,9 @@ cat /proc/1/environ |tr '\0' '\n' | sed "s/^/export /g" > /tmp/env
 source /tmp/env
 rm /tmp/env
 
+# # # # # Config
+SCRIPT_DIR=/setup
+
 # # # # # Setup 
 SECRETS_DIR=/run/secrets
 SSH_USER=${SSH_USER:-user}
@@ -14,7 +17,7 @@ SSH_DIR=/home/$SSH_USER/.ssh
 SSH_USER_GROUP=${SSH_USER_GROUP:-}
 SSH_USER_GROUPS=${SSH_USER_GROUPS:-}
 
-printf "Setting up the ssh container...\n"
+printf "Starting the setup script...\n"
 
 # # # # # Get options : This does not work as this is now a service
 if [[ "$1" == "help" ]]
@@ -27,7 +30,6 @@ then
     "
     exit
 fi
-
 # # # # #  Load any variables given to container
 
 # # # # # Get any docker secrets
@@ -42,34 +44,10 @@ then
 fi
 
 
-
-# # # # # Add the ssh user
-USERADD="useradd --uid $SSH_USER_ID -m $SSH_USER"
- USERADD="$USERADD -o" # To allow users with same id
-[[ "$SSH_USER_GROUP"  ]] && USERADD="$USERADD -g $SSH_USER_GROUP"
-[[ "$SSH_USER_GROUPS" ]] && USERADD="$USERADD -G $SSH_USER_GROUPS"
-$USERADD
-mkdir -p $SSH_DIR $SSH_USER_EXTRA_DIRS
-
-# # # # # Add any public keys
-if [[ "$SSH_PUBLIC_KEY" ]]
-then
-    echo "$SSH_PUBLIC_KEY" >> $SSH_DIR/authorized_keys
-fi
-for key in $(env | sed -n "s/^SSH_PUBLIC_KEY_[A-Z0-9]*=//p")
+# # # # # Load all the setup scripts
+for script in $SCRIPT_DIR/*
 do
-    echo "$key" >> $SSH_DIR/authorized_keys
+    chmod +x $script
+    $script
 done
 
-# # # # # Permission fixes
-chown -R $SSH_USER_ID /home/$SSH_USER $SSH_USER_EXTRA_DIRS
-chmod -R 700 $SSH_DIR
-
-# # # # # Login fix
-if [[ -f /run/nologin ]]
-then
-    mv /run/nologin /run/nologin-bak
-fi
-
-
-ccccc env
