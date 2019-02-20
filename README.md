@@ -2,11 +2,9 @@
 An example swarm stack file
 
 ## To run
-`
-export VERSION=latest # Or you can use a set version
+`export VERSION=latest` # Or you can use a set version
 
-./run.sh
-`
+`./run.sh`
 
 
 ## To run a local build, you can run:
