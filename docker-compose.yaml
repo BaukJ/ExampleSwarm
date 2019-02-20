@@ -29,11 +29,11 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - $PWD/tmp/slave_run:/run
-    ports:
-      - 3022:22
     secrets:
       - source: SSH_SLAVE_PUBLIC_KEY
         target: SSH_PUBLIC_KEY
+    deploy:
+      replicas: 0
   jenkins_slave_docker:
     image: bauk/jenkins-ssh_slave-docker
     build: images/jenkins-ssh_slave-docker
@@ -45,8 +45,6 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - $PWD/tmp/slave_run:/run
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 4022:22
     secrets:
       - source: SSH_SLAVE_PUBLIC_KEY
         target: SSH_PUBLIC_KEY
@@ -54,6 +52,10 @@ services:
 
   visualiser:
     image: dockersamples/visualizer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
 
 
 secrets:
