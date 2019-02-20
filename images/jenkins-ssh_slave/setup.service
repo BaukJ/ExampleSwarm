@@ -2,7 +2,7 @@
 Description=SSH user and folder setup service
 
 [Service]
-ExecStart=/ssh_setup.sh
+ExecStart=/setup.sh
 
 [Install]
 WantedBy=multi-user.target

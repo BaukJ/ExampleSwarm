@@ -3,7 +3,7 @@
 
 # # # # # Add the ssh user
 USERADD="useradd --uid $SSH_USER_ID -m $SSH_USER"
- USERADD="$USERADD -o" # To allow users with same id
+USERADD="$USERADD -o" # To allow users with same id
 [[ "$SSH_USER_GROUP"  ]] && USERADD="$USERADD -g $SSH_USER_GROUP"
 [[ "$SSH_USER_GROUPS" ]] && USERADD="$USERADD -G $SSH_USER_GROUPS"
 $USERADD

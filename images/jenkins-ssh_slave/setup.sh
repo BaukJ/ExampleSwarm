@@ -3,19 +3,19 @@
 # # # # # Load any container environmental variables
 cat /proc/1/environ |tr '\0' '\n' | sed "s/^/export /g" > /tmp/env
 source /tmp/env
-rm /tmp/env
+rm -f /tmp/env
 
 # # # # # Config
 SCRIPT_DIR=/setup
+SECRETS_DIR=/run/secrets
 
 # # # # # Setup 
-SECRETS_DIR=/run/secrets
-SSH_USER=${SSH_USER:-user}
-SSH_USER_ID=${SSH_USER_ID:-1000}
-SSH_USER_EXTRA_DIRS=${SSH_USER_EXTRA_DIRS:-}
-SSH_DIR=/home/$SSH_USER/.ssh
-SSH_USER_GROUP=${SSH_USER_GROUP:-}
-SSH_USER_GROUPS=${SSH_USER_GROUPS:-}
+export SSH_USER=${SSH_USER:-user}
+export SSH_USER_ID=${SSH_USER_ID:-1000}
+export SSH_USER_EXTRA_DIRS=${SSH_USER_EXTRA_DIRS:-}
+export SSH_DIR=/home/$SSH_USER/.ssh
+export SSH_USER_GROUP=${SSH_USER_GROUP:-}
+export SSH_USER_GROUPS=${SSH_USER_GROUPS:-}
 
 printf "Starting the setup script...\n"
 

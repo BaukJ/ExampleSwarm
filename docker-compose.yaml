@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   jenkins:
-    image: bauk/jenkins-master
+    image: bauk/jenkins-master:$VERSION
     build: images/jenkins-master
     environment:
       - CASC_JENKINS_CONFIG=/jenkins.yaml
@@ -21,8 +21,9 @@ services:
     ports:
       - 9000:8080
   jenkins_slave:
-    image: bauk/jenkins-ssh_slave
-    build: images/jenkins-ssh_slave
+    image: bauk/jenkins-ssh_slave:$VERSION
+    build:
+      context: images/jenkins-ssh_slave
     environment:
       - SSH_USER=slave
       - SSH_USER_EXTRA_DIRS=/jenkins
@@ -35,11 +36,13 @@ services:
     deploy:
       replicas: 0
   jenkins_slave_docker:
-    image: bauk/jenkins-ssh_slave-docker
-    build: images/jenkins-ssh_slave-docker
+    image: bauk/jenkins-ssh_slave-docker:$VERSION
+    build:
+      context: images/jenkins-ssh_slave-docker
+      args:
+        VERSION: ${VERSION}
     environment:
       - SSH_USER=slave
-      - SSH_USER_ID=0 # Needs to be someone on host who has docker access
       - SSH_USER_EXTRA_DIRS=/jenkins
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
