@@ -11,6 +11,8 @@ SSH_USER=${SSH_USER:-user}
 SSH_USER_ID=${SSH_USER_ID:-1000}
 SSH_USER_EXTRA_DIRS=${SSH_USER_EXTRA_DIRS:-}
 SSH_DIR=/home/$SSH_USER/.ssh
+SSH_USER_GROUP=${SSH_USER_GROUP:-}
+SSH_USER_GROUPS=${SSH_USER_GROUPS:-}
 
 printf "Setting up the ssh container...\n"
 
@@ -42,7 +44,11 @@ fi
 
 
 # # # # # Add the ssh user
-useradd --uid $SSH_USER_ID $SSH_USER -m
+USERADD="useradd --uid $SSH_USER_ID -m $SSH_USER"
+ USERADD="$USERADD -o" # To allow users with same id
+[[ "$SSH_USER_GROUP"  ]] && USERADD="$USERADD -g $SSH_USER_GROUP"
+[[ "$SSH_USER_GROUPS" ]] && USERADD="$USERADD -G $SSH_USER_GROUPS"
+$USERADD
 mkdir -p $SSH_DIR $SSH_USER_EXTRA_DIRS
 
 # # # # # Add any public keys

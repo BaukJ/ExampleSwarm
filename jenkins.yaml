@@ -26,6 +26,22 @@ jenkins:
             sshHostKeyVerificationStrategy:
               manuallyTrustedKeyVerificationStrategy:
                 requireInitialManualTrust: false
+    - permanent:
+        labelString: "linux docker git"
+        mode: NORMAL
+        name: "docker slave"
+        remoteFS: "/jenkins"
+        launcher:
+          SSHLauncher:
+            host: jenkins_slave_docker
+            port: 22
+            credentialsId: slaveSSH
+            launchTimeoutSeconds: 60
+            maxNumRetries: 3
+            retryWaitTime: 30
+            sshHostKeyVerificationStrategy:
+              manuallyTrustedKeyVerificationStrategy:
+                requireInitialManualTrust: false
 tool:
   git:
     installations:

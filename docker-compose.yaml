@@ -27,14 +27,30 @@ services:
       - SSH_USER=slave
       - SSH_USER_EXTRA_DIRS=/jenkins
     volumes:
-      #- /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - $PWD/tmp/slave_run:/run
     ports:
       - 3022:22
     secrets:
       - source: SSH_SLAVE_PUBLIC_KEY
         target: SSH_PUBLIC_KEY
+  jenkins_slave_docker:
+    image: bauk/jenkins-ssh_slave-docker
+    build: images/jenkins-ssh_slave-docker
+    environment:
+      - SSH_USER=slave
+      - SSH_USER_ID=0 # Needs to be someone on host who has docker access
+      - SSH_USER_EXTRA_DIRS=/jenkins
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - $PWD/tmp/slave_run:/run
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 4022:22
+    secrets:
+      - source: SSH_SLAVE_PUBLIC_KEY
+        target: SSH_PUBLIC_KEY
+
 
   visualiser:
     image: dockersamples/visualizer
