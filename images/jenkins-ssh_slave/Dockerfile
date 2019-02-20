@@ -1,5 +1,5 @@
 FROM centos/systemd
-
+# TODO: Sort these into better order
 RUN yum -y install openssh-server java-1.8.0-openjdk
 RUN systemctl enable sshd
 
@@ -13,3 +13,4 @@ RUN chmod +x /entrypoint.sh
 # ENTRYPOINT ["/entrypoint.sh"]
 # CMD []
 
+RUN yum install -y git
