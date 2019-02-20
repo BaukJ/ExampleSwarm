@@ -76,5 +76,6 @@ htmlpublisher
 # Configuration as code
 configuration-as-code
 configuration-as-code-support
+job-dsl
 jdk-tool
 ssh-agent

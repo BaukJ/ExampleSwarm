@@ -11,7 +11,7 @@ jenkins:
         - "Overall/Administer:authenticated"
   nodes:
     - permanent:
-        labelString: "linux docker git"
+        labelString: "linux"
         mode: NORMAL
         name: "slave"
         remoteFS: "/jenkins"
@@ -46,7 +46,7 @@ tool:
   git:
     installations:
       - name: git
-        home: /usr/local/bin/git
+        home: /usr/bin/git
 credentials:
   system:
     domainCredentials:
@@ -62,3 +62,41 @@ credentials:
                   privateKey: ${SSH_SLAVE_KEY}
                 # FileOnMasterPrivateKeySource:
                 #   privateKeyFile: /run/secrets/id_rsa
+
+jobs:
+  - script: >
+      multibranchPipelineJob('PetClinic') {
+          branchSources {
+              git {
+                  remote('https://github.com/BaukJ/spring-petclinic.git')
+                  //credentialsId('github-ci')
+              }
+          }
+          orphanedItemStrategy {
+              discardOldItems {
+                  numToKeep(20)
+              }
+          }
+      }
+  - script: >
+       folder('testjobs')
+  - script: >
+       pipelineJob('testjobs/default-agent') {
+         definition {
+           cps {
+             script("""\
+               pipeline {
+                 agent any
+                 stages {
+                   stage ('test') {
+                     steps {
+                       echo "hello"
+                     }
+                   }
+                 }
+               }""".stripIndent())
+           }
+         }
+       }
+
+
