@@ -1,0 +1,21 @@
+version: '3.5'
+
+
+services:
+  gerrit:
+    image: gerritcodereview/gerrit:2.16.5
+    configs:
+      - source: gerrit
+        target: /var/gerrit/etc/gerrit.config
+    ports:
+      - 29418:29418
+      - 8080:8080
+    volumes:
+      - $PWD/tmp/gerrit/git:/var/gerrit/git
+      - $PWD/tmp/gerrit/db:/var/gerrit/db
+      #- $PWD/tmp/gerrit/etc:/var/gerrit/etc
+      #- $PWD/tmp/gerrit/cache:/var/gerrit/cache
+
+configs:
+  jenkins:
+    file: tmp/jenkins.yaml

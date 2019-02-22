@@ -1,0 +1,9 @@
+# pack-refs with: peeled
+53a056f98d9a75cdcc61103c52adfdceec149314 refs/groups/17/175e94427f387641948171ffc4d4771a02e14748
+bfe50caab7204e768fb24785a8711e24598952dc refs/groups/3b/3b71ba4b5e18c66a1bce2ea83c1d05b455f25a9b
+b3f994fc7bc1627932b2a645690ddce7801c863e refs/meta/config
+5cf514259aab95ed78c2bc34fdfbe3d27aa2ca67 refs/meta/external-ids
+5329bdee0af894ee8d8990238ab503cbc0ceed7a refs/meta/group-names
+44b2d5628ae9a825b22c86ed14f0ce6335ea888b refs/sequences/accounts
+e440e5c842586965a7fb77deda2eca68612b1f53 refs/sequences/groups
+53dcbba709c13c16b04b9fce87ad4ef8d1f81ca7 refs/users/00/1000000
