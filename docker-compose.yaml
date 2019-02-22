@@ -7,8 +7,9 @@ services:
     build: images/jenkins-master
     environment:
       - CASC_JENKINS_CONFIG=/jenkins.yaml
-    volumes:
-      - $PWD/jenkins.yaml:/jenkins.yaml
+    configs:
+      - source: jenkins
+        target: /jenkins.yaml
     secrets:
       - source: SSH_SLAVE_KEY
         uid: '1000'
@@ -52,14 +53,40 @@ services:
       - source: SSH_SLAVE_PUBLIC_KEY
         target: SSH_PUBLIC_KEY
 
+  gerrit:
+    image: gerritcodereview/gerrit:2.16.5
+    configs:
+      - source: gerrit
+        target: /var/gerrit/etc/gerrit.config
+    ports:
+      - 29418:29418
+      - 8080:8080
+    # volumes:
+    #   - gerrit-git:/var/gerrit/git
+    #   - gerrit-db:/var/gerrit/db
+    #   - gerrit-etc:/var/gerrit/etc
+    #   - gerrit-cache:/var/gerrit/cache
+
 
   visualiser:
     image: dockersamples/visualizer
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 8080:8080
+      - 8081:8080
 
+  # gitlab:
+  #   image: store/gitlab/gitlab-ce:10.2.4-ce.0
+  #   ports:
+  #     - 1443:443
+  #     - 1080:80
+  #     - 1022:22
+
+configs:
+  jenkins:
+    file: configs/jenkins.yaml
+  gerrit:
+    file: configs/gerrit.config
 
 secrets:
   SSH_SLAVE_KEY:
