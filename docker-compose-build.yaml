@@ -17,6 +17,6 @@ services:
         VERSION: ${VERSION}
 
   gerrit:
-    image: bauk/gerrit-example:$VERSION
+    image: bauk/gerrit:$VERSION
     build: images/gerrit
 
