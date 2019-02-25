@@ -4,11 +4,13 @@ version: '3.5'
 services:
   jenkins:
     image: bauk/jenkins-master:$VERSION
+    volumes:
+      - $PWD/configs/jenkins.yaml:/jenkins.yaml
     environment:
       - CASC_JENKINS_CONFIG=/jenkins.yaml
-    configs:
-      - source: jenkins
-        target: /jenkins.yaml
+    # configs:
+    #   - source: jenkins
+    #     target: /jenkins.yaml
     secrets:
       - source: SSH_SLAVE_KEY
         uid: '1000'
@@ -17,6 +19,12 @@ services:
       - source: JENKINS_ADMIN_USER
         uid: '1000'
       - source: JENKINS_ADMIN_PASSWORD
+        uid: '1000'
+      - source: ADMIN_USER
+        uid: '1000'
+      - source: ADMIN_PASSWORD
+        uid: '1000'
+      - source: LDAP_PASSWORD
         uid: '1000'
     ports:
       - 9000:8080
@@ -98,6 +106,10 @@ secrets:
     file: secrets/JENKINS_ADMIN_USER
   JENKINS_ADMIN_PASSWORD:
     file: secrets/JENKINS_ADMIN_PASSWORD
+  ADMIN_USER:
+    file: secrets/ADMIN_USER
+  ADMIN_PASSWORD:
+    file: secrets/ADMIN_PASSWORD
   LDAP_PASSWORD:
     file: secrets/LDAP_PASSWORD
 

@@ -4,7 +4,10 @@ jenkins:
       configurations:
         - server: ldap
           rootDN: dc=example,dc=org
+          managerDN: cn=admin,dc=example,dc=org
           managerPasswordSecret: ${LDAP_PASSWORD}
+          groupSearchBase: ou=groups
+          userSearchBase: ou=people
       cache:
         size: 100
         ttl: 10
@@ -46,14 +49,21 @@ credentials:
     domainCredentials:
       - credentials:
         - basicSSHUserPrivateKey:
-              scope: SYSTEM
-              id: slaveSSH
-              username: slave
-              passphrase: ${SSH_SLAVE_KEY_PASSWORD}
-              description: "SSH Key for slaves"
-              privateKeySource:
-                directEntry:
-                  privateKey: ${SSH_SLAVE_KEY}
+            scope: SYSTEM
+            id: slaveSSH
+            username: slave
+            passphrase: ${SSH_SLAVE_KEY_PASSWORD}
+            description: "SSH Key for slaves"
+            privateKeySource:
+              directEntry:
+                privateKey: ${SSH_SLAVE_KEY}
+        - usernamePassword:
+            scope: GLOBAL
+            id: gerritUsername
+            username: ${ADMIN_USER}
+            password: ${ADMIN_PASSWORD}
+            description: Admin username/password for cloning repos
+
 jobs:
   - script: >
       multibranchPipelineJob('PetClinic') {
