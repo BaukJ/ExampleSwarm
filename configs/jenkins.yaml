@@ -1,14 +1,24 @@
 jenkins:
   securityRealm:
-    local:
-      allowsSignup: false
-      users:
-       - id: ${JENKINS_ADMIN_USER}
-         password: ${JENKINS_ADMIN_PASSWORD}
-  authorizationStrategy:
-    globalMatrix:
-      grantedPermissions:
-        - "Overall/Administer:authenticated"
+    ldap:
+      configurations:
+        - server: ldap
+          rootDN: dc=example,dc=org
+          managerPasswordSecret: ${LDAP_PASSWORD}
+      cache:
+        size: 100
+        ttl: 10
+      userIdStrategy: CaseSensitive
+      groupIdStrategy: CaseSensitive
+  #   local:
+  #     allowsSignup: false
+  #     users:
+  #      - id: ${JENKINS_ADMIN_USER}
+  #        password: ${JENKINS_ADMIN_PASSWORD}
+  # authorizationStrategy:
+  #   globalMatrix:
+  #     grantedPermissions:
+  #       - "Overall/Administer:authenticated"
   nodes:
     - permanent:
         labelString: "linux docker git"

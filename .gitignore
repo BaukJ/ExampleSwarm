@@ -1,1 +1,5 @@
 /tmp/
+
+# These are in the dev branch
+/docker-compose-dev.yaml
+/run_dev.sh
