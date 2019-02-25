@@ -12,9 +12,9 @@ services:
     #   - source: jenkins
     #     target: /jenkins.yaml
     secrets:
-      - source: SSH_SLAVE_KEY
+      - source: SSH_KEY
         uid: '1000'
-      - source: SSH_SLAVE_KEY_PASSWORD
+      - source: SSH_KEY_PASSWORD
         uid: '1000'
       - source: JENKINS_ADMIN_USER
         uid: '1000'
@@ -33,14 +33,14 @@ services:
   jenkins_slave_docker:
     image: bauk/jenkins-ssh_slave-docker:$VERSION
     environment:
-      - SSH_USER=slave
+      - SSH_USER=jenkins
       - SSH_USER_EXTRA_DIRS=/jenkins
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - $PWD/tmp/slave_run:/run
       - /var/run/docker.sock:/var/run/docker.sock
     secrets:
-      - source: SSH_SLAVE_PUBLIC_KEY
+      - source: SSH_PUBLIC_KEY
         target: SSH_PUBLIC_KEY
     deploy:
       replicas: 0
@@ -96,12 +96,12 @@ configs:
     file: configs/ldap.ldif
 
 secrets:
-  SSH_SLAVE_KEY:
-    file: secrets/SSH_SLAVE_KEY
-  SSH_SLAVE_KEY_PASSWORD:
-    file: secrets/SSH_SLAVE_KEY_PASSWORD
-  SSH_SLAVE_PUBLIC_KEY:
-    file: secrets/SSH_SLAVE_PUBLIC_KEY
+  SSH_KEY:
+    file: secrets/SSH_KEY
+  SSH_KEY_PASSWORD:
+    file: secrets/SSH_KEY_PASSWORD
+  SSH_PUBLIC_KEY:
+    file: secrets/SSH_PUBLIC_KEY
   JENKINS_ADMIN_USER:
     file: secrets/JENKINS_ADMIN_USER
   JENKINS_ADMIN_PASSWORD:

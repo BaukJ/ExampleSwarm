@@ -51,12 +51,12 @@ credentials:
         - basicSSHUserPrivateKey:
             scope: SYSTEM
             id: slaveSSH
-            username: slave
-            passphrase: ${SSH_SLAVE_KEY_PASSWORD}
+            username: jenkins
+            passphrase: ${SSH_KEY_PASSWORD}
             description: "SSH Key for slaves"
             privateKeySource:
               directEntry:
-                privateKey: ${SSH_SLAVE_KEY}
+                privateKey: ${SSH_KEY}
         - usernamePassword:
             scope: GLOBAL
             id: gerritUsername
