@@ -36,5 +36,5 @@ printf "
 "
 git tag $VERSION -m "$@"
 git push --tags
-docker-compose -f docker-compose.yaml -f docker-compose-build.yaml build
+./scripts/build.sh
 docker-compose -f docker-compose.yaml -f docker-compose-build.yaml push
