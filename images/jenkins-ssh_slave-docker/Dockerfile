@@ -6,5 +6,7 @@ RUN curl -fsSL https://get.docker.com | sh
 
 ENV SSH_USER_GROUPS=docker
 
-
 COPY ./setup_docker.sh /setup/
+
+RUN yum install -y unzip
+
