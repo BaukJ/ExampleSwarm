@@ -1,11 +1,15 @@
 #!/usr/bin/env sh
 
+./scripts/build.sh
+
 
 export VERSION=${VERSION:-`git describe --tags`}
 
 printf "
+         RUNNING LOCAL BUILD
+        =====================
     USING VERSION: $VERSION
+
 "
 
-docker-compose -f docker-compose.yaml -f docker-compose-build.yaml build
 docker stack deploy --compose-file docker-compose.yaml example

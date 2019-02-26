@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
 set -e
+printf "
+            RELEASING
+           ===========
+"
 
 OLD_VERSION=$(git tag | sort -V | tail)
 if [[ ! "$(echo $OLD_VERSION | grep '^\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)$')" ]]
@@ -28,6 +32,7 @@ export VERSION="${OLD_MAJOR}.${OLD_MINOR}.${NEW_PATCH}"
 printf "
     USING VERSION: $VERSION
     USING MESSAGE: '$@'
+
 "
 git tag $VERSION -m "$@"
 git push --tags
