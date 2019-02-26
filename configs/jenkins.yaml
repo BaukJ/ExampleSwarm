@@ -32,7 +32,7 @@ jenkins:
           SSHLauncher:
             host: jenkins_slave_docker
             port: 22
-            credentialsId: slaveSSH
+            credentialsId: jenkinsSSH
             launchTimeoutSeconds: 60
             maxNumRetries: 3
             retryWaitTime: 30
@@ -49,8 +49,8 @@ credentials:
     domainCredentials:
       - credentials:
         - basicSSHUserPrivateKey:
-            scope: SYSTEM
-            id: slaveSSH
+            scope: GLOBAL
+            id: jenkinsSSH
             username: jenkins
             passphrase: ${SSH_KEY_PASSWORD}
             description: "SSH Key for slaves"
@@ -72,6 +72,25 @@ jobs:
                   remote('https://github.com/BaukJ/spring-petclinic.git')
                   //credentialsId('github-ci')
               }
+          }
+          orphanedItemStrategy {
+              discardOldItems {
+                  numToKeep(20)
+              }
+          }
+      }
+  - script: >
+      multibranchPipelineJob('PetClinic_Local') {
+          branchSources {
+              git {
+                remote('ssh://jenkins@gerrit:29418/spring-petclinic.git')
+                credentialsId('jenkinsSSH')
+              }
+          }
+          factory {
+            workflowBranchProjectFactory {
+              scriptPath('Jenkinsfile_Gerrit')
+            }
           }
           orphanedItemStrategy {
               discardOldItems {

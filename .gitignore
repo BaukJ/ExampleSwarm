@@ -8,3 +8,6 @@
 /mounts/gerrit-review_site/**/*.lock.db
 /mounts/slave_run/
 /mounts/gerrit-review_site/logs/
+/mounts/gerrit-review_site/tmp/
+# This file is very large  (>50M) but is not needed
+/mounts/gerrit-review_site/bin/gerrit.war
