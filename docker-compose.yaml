@@ -46,8 +46,8 @@ services:
       replicas: 0
 
   gerrit:
-    #image: bauk/gerrit:${VERSION}
-    image: openfrontier/gerrit:2.15.10
+    image: bauk/gerrit:${VERSION}
+    #image: openfrontier/gerrit:2.15.10
     ports:
       - 29418:29418
       - 8080:8080
