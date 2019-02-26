@@ -3,3 +3,8 @@
 # These are in the dev branch
 /docker-compose-dev.yaml
 /run_dev.sh
+
+# For mounts:
+/mounts/gerrit-review_site/**/*.lock.db
+/mounts/slave_run/
+/mounts/gerrit-review_site/logs/
