@@ -34,7 +34,12 @@ printf "
     USING MESSAGE: '$@'
 
 "
-git tag $VERSION -m "$@"
+if [[ "$@" ]]
+then
+    git tag $VERSION -m "$@"
+else
+    git tag $VERSION
+fi
 git push --tags
 ./scripts/build.sh
 docker-compose -f docker-compose.yaml -f docker-compose-build.yaml push
